@@ -1,4 +1,4 @@
-name: Douren Backend Production Deployment
+name: Booknest Backend Production Deployment
 
 on:
   push:
@@ -44,7 +44,7 @@ jobs:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_KEY }}
         run: |
 
-          cd be/douren-backend
+          cd be/booknest-be
           while IFS= read -r line || [[ -n "$line" ]]; do
             # Ignore comments, empty lines, and the DEV_ENV variable
             if [[ ! $line =~ ^\s*# ]] && [[ -n "$line" ]] && [[ ! $line =~ ^DEV_ENV= ]]; then
@@ -63,3 +63,6 @@ jobs:
           
           echo "Debug: WRANGLER_VARS=$WRANGLER_VARS" 
           npm run deploy -- $WRANGLER_VARS --env production 
+      - name: Update Database
+        run: |
+            npm run db:migrate

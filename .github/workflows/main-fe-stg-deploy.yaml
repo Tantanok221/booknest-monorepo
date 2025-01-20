@@ -1,9 +1,9 @@
-name: Douren Frontend Staging Deployment
+name: Booknest Frontend Staging Deployment
 
 on:
   pull_request:
     paths:
-      - 'fe/Douren-frontend/**'
+      - 'fe/booknest-fe/**'
       - 'pkg/type'
       - "lib/ui/**"
 
@@ -51,6 +51,6 @@ jobs:
           CF_ACCOUNT_ID: ${{secrets.CLOUDFLARE_ACCOUNT_ID}}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_KEY }}
         run: |
-          cd fe/Douren-frontend
+          cd fe/booknest-fe
           npm run build
           wrangler pages deploy dist --branch stg 

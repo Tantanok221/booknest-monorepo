@@ -1,5 +1,5 @@
 {
-  "name": "douren-monorepo",
+  "name": "booknest-monorepo",
   "private": true,
   "scripts": {
     "build": "turbo build",

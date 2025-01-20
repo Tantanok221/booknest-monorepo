@@ -1,9 +1,9 @@
-name: Douren Backend Staging Deployment
+name: Booknest Backend Staging Deployment
 
 on:
   pull_request:
     paths:
-      - 'be/douren-backend/**'
+      - 'be/booknest-be/**'
       - 'pkg/**'
 
 
@@ -46,7 +46,7 @@ jobs:
           CF_ACCOUNT_ID: ${{secrets.CLOUDFLARE_ACCOUNT_ID}}
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_KEY }}
         run: |
-          cd be/douren-backend
+          cd be/booknest-be
           while IFS= read -r line || [[ -n "$line" ]]; do
             # Ignore comments, empty lines, and the DEV_ENV variable
             if [[ ! $line =~ ^\s*# ]] && [[ -n "$line" ]] && [[ ! $line =~ ^DEV_ENV= ]]; then
@@ -65,3 +65,6 @@ jobs:
 
           echo "Debug: WRANGLER_VARS=$WRANGLER_VARS" 
           npm run deploy -- $WRANGLER_VARS --env staging 
+      - name: Update Database
+        run: |
+          npm run db:migrate
