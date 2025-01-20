@@ -1,9 +1,8 @@
 import {
   pgTable,
-  varchar,
   text,
   timestamp,
-  float,
+  real,
   integer,
   primaryKey,
   index,
@@ -13,10 +12,10 @@ import { relations } from 'drizzle-orm';
 // USER Table
 export const user = pgTable('user', {
   userId: integer('user_id').generatedAlwaysAsIdentity({ startWith: 0 }).primaryKey(),
-  name: varchar('name', { length: 255 }).notNull(),
-  email: varchar('email', { length: 255 }).notNull().unique(),
-  password: varchar('password', { length: 255 }).notNull(),
-  role: varchar('role', { length: 50 }).notNull(),
+  name: text('name').notNull(),
+  email: text('email').notNull().unique(),
+  password: text('password').notNull(),
+  role: text('role').notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 }, (table) => ({
@@ -27,13 +26,13 @@ export const user = pgTable('user', {
 // BOOK Table
 export const book = pgTable('book', {
   bookId: integer('book_id').generatedAlwaysAsIdentity({ startWith: 0 }).primaryKey(),
-  title: varchar('title', { length: 255 }).notNull(),
-  genre: varchar('genre', { length: 255 }).array().notNull(),
-  author: varchar('author', { length: 255 }).notNull(),
+  title: text('title').notNull(),
+  genre: text('genre').array().notNull(),
+  author: text('author').notNull(),
   synopsis: text('synopsis').notNull(),
-  rating: float('rating').notNull(),
-  popularityScore: float('popularity_score').notNull(),
-  coverImageUrl: varchar('cover_image_url', { length: 255 }).notNull(),
+  rating: real('rating').notNull(),
+  popularityScore: real('popularity_score').notNull(),
+  coverImageUrl: text('cover_image_url').notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
   updatedAt: timestamp('updated_at').defaultNow().notNull(),
 }, (table) => ({
@@ -48,7 +47,7 @@ export const book = pgTable('book', {
 // BOOKMETADATATAG Table
 export const bookMetadataTag = pgTable('bookmetadatatag', {
   tagId: integer('tag_id').generatedAlwaysAsIdentity({ startWith: 0 }).primaryKey(),
-  tagName: varchar('tag_name', { length: 255 }).notNull(),
+  tagName: text('tag_name').notNull(),
 }, (table) => ({
   tagNameIdx: index('tag_name_idx').on(table.tagName), // Index for searching tags by name
 }));
@@ -67,7 +66,7 @@ export const bookTagMapping = pgTable('booktagmapping', {
 export const userList = pgTable('userlist', {
   listId: integer('list_id').generatedAlwaysAsIdentity({ startWith: 0 }).primaryKey(),
   userId: integer('user_id').references(() => user.userId),
-  listName: varchar('list_name', { length: 255 }).notNull(),
+  listName: text('list_name').notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 }, (table) => ({
   userIdIdx: index('user_id_idx').on(table.userId), // Index for filtering lists by user
@@ -89,7 +88,7 @@ export const review = pgTable('review', {
   reviewId: integer('review_id').generatedAlwaysAsIdentity({ startWith: 0 }).primaryKey(),
   userId: integer('user_id').references(() => user.userId),
   bookId: integer('book_id').references(() => book.bookId),
-  rating: float('rating').notNull(),
+  rating: real('rating').notNull(),
   comment: text('comment').notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
 }, (table) => ({
@@ -104,7 +103,7 @@ export const userBehaviorLog = pgTable('userbehaviorlog', {
   logId: integer('log_id').generatedAlwaysAsIdentity({ startWith: 0 }).primaryKey(),
   userId: integer('user_id').references(() => user.userId),
   bookId: integer('book_id').references(() => book.bookId),
-  action: varchar('action', { length: 255 }).notNull(),
+  action: text('action').notNull(),
   timestamp: timestamp('timestamp').defaultNow().notNull(),
 }, (table) => ({
   userIdIdx: index('user_id_idx').on(table.userId), // Index for filtering logs by user

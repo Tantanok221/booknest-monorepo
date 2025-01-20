@@ -1,70 +1,79 @@
-import { authorMainInsertSchema, authorMainSelectSchema } from "./authorMain.js";
-import { authorProductInsertSchema, authorProductSelectSchema } from "./authorProduct.js";
-import { eventInsertSchema, eventSelectSchema } from "./event.js";
-import { eventDmInsertSchema, eventDmSelectSchema } from "./eventDm.js";
-import { ownerInsertSchema, ownerSelectSchema } from "./owner.js";
-import { tagInsertSchema, tagSelectSchema } from "./tag.js";
-import { authorTagInsertSchema, authorTagSelectSchema } from "./authorTag.js";
+import { userInsertSchema, userSelectSchema } from "./user.js";
+import { bookInsertSchema, bookSelectSchema } from "./book.js";
+import { bookMetadataTagInsertSchema, bookMetadataTagSelectSchema } from "./bookMetadataTag.js";
+import { bookTagMappingInsertSchema, bookTagMappingSelectSchema } from "./bookTagMapping.js";
+import { userListInsertSchema, userListSelectSchema } from "./userList.js";
+import { userListBookMappingInsertSchema, userListBookMappingSelectSchema } from "./userListBookMapping.js";
+import { reviewInsertSchema, reviewSelectSchema } from "./review.js";
+import { userBehaviorLogInsertSchema, userBehaviorLogSelectSchema } from "./userBehaviorLog.js";
 
 export const zodSchema = { 
-          authorMain: {
-            InsertSchema: authorMainInsertSchema,
-            SelectSchema: authorMainSelectSchema
+          user: {
+            InsertSchema: userInsertSchema,
+            SelectSchema: userSelectSchema
           },
-          authorProduct: {
-            InsertSchema: authorProductInsertSchema,
-            SelectSchema: authorProductSelectSchema
+          book: {
+            InsertSchema: bookInsertSchema,
+            SelectSchema: bookSelectSchema
           },
-          event: {
-            InsertSchema: eventInsertSchema,
-            SelectSchema: eventSelectSchema
+          bookMetadataTag: {
+            InsertSchema: bookMetadataTagInsertSchema,
+            SelectSchema: bookMetadataTagSelectSchema
           },
-          eventDm: {
-            InsertSchema: eventDmInsertSchema,
-            SelectSchema: eventDmSelectSchema
+          bookTagMapping: {
+            InsertSchema: bookTagMappingInsertSchema,
+            SelectSchema: bookTagMappingSelectSchema
           },
-          owner: {
-            InsertSchema: ownerInsertSchema,
-            SelectSchema: ownerSelectSchema
+          userList: {
+            InsertSchema: userListInsertSchema,
+            SelectSchema: userListSelectSchema
           },
-          tag: {
-            InsertSchema: tagInsertSchema,
-            SelectSchema: tagSelectSchema
+          userListBookMapping: {
+            InsertSchema: userListBookMappingInsertSchema,
+            SelectSchema: userListBookMappingSelectSchema
           },
-          authorTag: {
-            InsertSchema: authorTagInsertSchema,
-            SelectSchema: authorTagSelectSchema
+          review: {
+            InsertSchema: reviewInsertSchema,
+            SelectSchema: reviewSelectSchema
+          },
+          userBehaviorLog: {
+            InsertSchema: userBehaviorLogInsertSchema,
+            SelectSchema: userBehaviorLogSelectSchema
           }
         };
 
 export type zodSchemaType = {
         
-          authorMain: {
-            InsertSchema: authorMainInsertSchema,
-            SelectSchema: authorMainSelectSchema
+          user: {
+            InsertSchema: userInsertSchema,
+            SelectSchema: userSelectSchema
           },
-          authorProduct: {
-            InsertSchema: authorProductInsertSchema,
-            SelectSchema: authorProductSelectSchema
+          book: {
+            InsertSchema: bookInsertSchema,
+            SelectSchema: bookSelectSchema
           },
-          event: {
-            InsertSchema: eventInsertSchema,
-            SelectSchema: eventSelectSchema
+          bookMetadataTag: {
+            InsertSchema: bookMetadataTagInsertSchema,
+            SelectSchema: bookMetadataTagSelectSchema
           },
-          eventDm: {
-            InsertSchema: eventDmInsertSchema,
-            SelectSchema: eventDmSelectSchema
+          bookTagMapping: {
+            InsertSchema: bookTagMappingInsertSchema,
+            SelectSchema: bookTagMappingSelectSchema
           },
-          owner: {
-            InsertSchema: ownerInsertSchema,
-            SelectSchema: ownerSelectSchema
+          userList: {
+            InsertSchema: userListInsertSchema,
+            SelectSchema: userListSelectSchema
           },
-          tag: {
-            InsertSchema: tagInsertSchema,
-            SelectSchema: tagSelectSchema
+          userListBookMapping: {
+            InsertSchema: userListBookMappingInsertSchema,
+            SelectSchema: userListBookMappingSelectSchema
           },
-          authorTag: {
-            InsertSchema: authorTagInsertSchema,
-            SelectSchema: authorTagSelectSchema
+          review: {
+            InsertSchema: reviewInsertSchema,
+            SelectSchema: reviewSelectSchema
+          },
+          userBehaviorLog: {
+            InsertSchema: userBehaviorLogInsertSchema,
+            SelectSchema: userBehaviorLogSelectSchema
           }
       };
