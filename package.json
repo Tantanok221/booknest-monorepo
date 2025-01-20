@@ -1,0 +1,61 @@
+{
+  "name": "douren-monorepo",
+  "private": true,
+  "scripts": {
+    "build": "turbo build",
+    "reset": "rimraf --glob node_modules",
+    "all": "npm run pkg && npm run lib && npm run be",
+    "be": "turbo build --filter=./be/* && npm install",
+    "pkg": "turbo build --filter=./pkg/* && npm install",
+    "lib": "turbo build --filter=./lib/* && npm install",
+    "dev": "turbo dev",
+    "deploy": "turbo deploy",
+    "format": "turbo format",
+    "devbe": "turbo dev --filter=./be/*",
+    "devfe": "turbo dev --filter=./fe/*",
+    "devpkg": "turbo dev --filter=./pkg/*",
+    "devlib": "turbo dev --filter=./lib/*",
+    "test": "turbo test",
+    "codegen": "turbo codegen && npm run pkg",
+    "db:generate": "turbo db:generate",
+    "db:migrate": "turbo db:migrate",
+    "db:introspect": "turbo db:introspect",
+    "db:push": "turbo db:push",
+    "lint": "turbo lint",
+    "env:pull": "npx dotenv-vault pull development  && make copy-env",
+    "env:push": "npx dotenv-vault push development && npx dotenv-vault push staging .env.stg && npx dotenv-vault push production .env.prod && make copy-env",
+    "env:new": "npx dotenv-vault new && touch .env && npm run env:push",
+    "env:login": "npx dotenv-vault login",
+    "dev:db": "from-env psql %LOCAL_DATABASE_URL",
+    "db:sync": "make db_sync",
+    "prepare": "husky",
+    "reinstall": "rimraf --glob ./**/node_modules && rimraf --glob ./**/dist && rimraf --glob ./**/.turbo && npm install && npm run pkg && npm run lib && npm run be "
+  },
+  "devDependencies": {
+    "@babel/types": "^7.25.6",
+    "@biomejs/biome": "1.9.0",
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "@types/babel__core": "^7.20.5",
+    "@types/node": "^22.5.5",
+    "@vitest/coverage-v8": "^2.1.3",
+    "barrelsby": "^2.8.1",
+    "dotenv": "^16.4.5",
+    "from-env": "^1.1.4",
+    "husky": "^9.1.6",
+    "prettier": "^3.3.3",
+    "rimraf": "^6.0.1",
+    "turbo": "^2.1.0",
+    "typescript": "^5.4.5"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "workspaces": [
+    "fe/*",
+    "be/*",
+    "pkg/*",
+    "lib/*"
+  ],
+  "packageManager": "npm@9.8.1"
+}

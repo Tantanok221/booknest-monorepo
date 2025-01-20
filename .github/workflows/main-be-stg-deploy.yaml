@@ -1,0 +1,67 @@
+name: Douren Backend Staging Deployment
+
+on:
+  pull_request:
+    paths:
+      - 'be/douren-backend/**'
+      - 'pkg/**'
+
+
+  workflow_dispatch:
+
+jobs:
+  stg-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    name: Deployment
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Get Env Variable
+        env:
+          dotenv: ${{secrets.DOTENV_ME}}
+        run: npx dotenv-vault pull staging --dotenvMe=$dotenv -y && mv .env.staging .env &&make copy-env
+
+      - name: Build Packages
+        run: npm run pkg
+
+      - name: Build Library
+        run: npm run lib
+
+      - name: Deploy Backend
+        env:
+          CF_ACCOUNT_ID: ${{secrets.CLOUDFLARE_ACCOUNT_ID}}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_KEY }}
+        run: |
+          cd be/douren-backend
+          while IFS= read -r line || [[ -n "$line" ]]; do
+            # Ignore comments, empty lines, and the DEV_ENV variable
+            if [[ ! $line =~ ^\s*# ]] && [[ -n "$line" ]] && [[ ! $line =~ ^DEV_ENV= ]]; then
+            # Split on the first '=' and preserve the rest
+            key="${line%%=*}"
+            value="${line#*=}"
+            
+            # Clean up the key and value
+            key=$(echo "$key" | tr -d '\r\n' | xargs)
+            value=$(echo "$value" | tr -d '\r\n' | xargs)
+            
+            # Add the key-value pair using colon instead of equals
+            WRANGLER_VARS+="--var ${key}:${value} "
+            fi
+          done < .env 
+
+          echo "Debug: WRANGLER_VARS=$WRANGLER_VARS" 
+          npm run deploy -- $WRANGLER_VARS --env staging 

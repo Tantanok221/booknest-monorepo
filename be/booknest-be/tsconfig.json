@@ -1,0 +1,22 @@
+{
+  "extends": "@pkg/typescript-config/be.json",
+  "include": [
+    "src"
+  ],
+  "main": "dist/index.js",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "src",
+    "declaration": true,
+    "composite": true,
+    "strict": true,
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "strictPropertyInitialization": false,
+    "baseUrl": ".",
+  },
+  "exclude": [
+    "dist"
+  ]
+}

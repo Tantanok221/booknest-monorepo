@@ -1,0 +1,39 @@
+{
+  "name": "@be/booknest-be",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "wrangler dev src/index.ts --port 2000",
+    "deploy": "wrangler deploy --minify src/index.ts",
+    "cron-test": "wrangler dev src/index.ts --test-scheduled --port 2000",
+    "build": "tsc",
+    "build:pkg": "tsc",
+    "format": "npx @biomejs/biome format --write ./src",
+    "lint": "npx @biomejs/biome lint --write ./src ",
+    "test": "vitest run"
+  },
+  "exports": {
+    "./api": {
+      "types": "./src/index.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "dependencies": {
+    "@hono/trpc-server": "^0.3.2",
+    "@hono/zod-validator": "^0.4.1",
+    "@pkg/database": "*",
+    "@pkg/type": "*",
+    "@trpc/server": "11.0.0-rc.553",
+    "drizzle-orm": "^0.33.0",
+    "drizzle-zod": "^0.5.1",
+    "hono": "^4.5.11",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240529.0",
+    "@pkg/env": "*",
+    "@pkg/typescript-config": "*",
+    "typescript": "^5.4.5",
+    "wrangler": "^3.78.12",
+    "vitest": "^2.1.1"
+  }
+}
